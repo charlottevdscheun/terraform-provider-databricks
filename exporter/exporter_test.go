@@ -597,14 +597,16 @@ func TestImportingClusters(t *testing.T) {
 				Response: jobs.JobListResponse{},
 			},
 			{
-				Method:   "GET",
-				Resource: "/api/2.0/clusters/list",
-				Response: getJSONObject("test-data/clusters-list-response.json"),
+				Method:       "GET",
+				Resource:     "/api/2.0/clusters/list",
+				Response:     getJSONObject("test-data/clusters-list-response.json"),
+				ReuseRequest: true,
 			},
 			{
-				Method:   "GET",
-				Resource: "/api/2.0/clusters/get?cluster_id=test1",
-				Response: getJSONObject("test-data/get-cluster-test1-response.json"),
+				Method:       "GET",
+				Resource:     "/api/2.0/clusters/get?cluster_id=test1",
+				Response:     getJSONObject("test-data/get-cluster-test1-response.json"),
+				ReuseRequest: true,
 			},
 			{
 				Method:   "POST",
@@ -612,9 +614,10 @@ func TestImportingClusters(t *testing.T) {
 				Response: clusters.EventDetails{},
 			},
 			{
-				Method:   "GET",
-				Resource: "/api/2.0/libraries/cluster-status?cluster_id=test1",
-				Response: getJSONObject("test-data/libraries-cluster-status-test1.json"),
+				Method:       "GET",
+				Resource:     "/api/2.0/libraries/cluster-status?cluster_id=test1",
+				Response:     getJSONObject("test-data/libraries-cluster-status-test1.json"),
+				ReuseRequest: true,
 			},
 			{
 				Method:   "GET",
@@ -706,6 +709,18 @@ func TestImportingClusters(t *testing.T) {
 				ReuseRequest: true,
 				Response:     scim.User{ID: "a", DisplayName: "test@test.com"},
 			},
+			{
+				Method:       "GET",
+				Resource:     "/api/2.0/instance-pools/get?instance_pool_id=pool1",
+				Response:     getJSONObject("test-data/get-instance-pool1.json"),
+				ReuseRequest: true,
+			},
+			{
+				Method:       "GET",
+				Resource:     "/api/2.0/permissions/instance-pools/pool1",
+				ReuseRequest: true,
+				Response:     getJSONObject("test-data/get-job-14-permissions.json"),
+			},
 		},
 		func(ctx context.Context, client *common.DatabricksClient) {
 			tmpDir := fmt.Sprintf("/tmp/tf-%s", qa.RandomName())
@@ -781,8 +796,8 @@ func TestImportingJobs_JobList(t *testing.T) {
 			{
 				Method:       "GET",
 				Resource:     "/api/2.0/instance-pools/get?instance_pool_id=pool1",
-				ReuseRequest: true,
 				Response:     getJSONObject("test-data/get-instance-pool1.json"),
+				ReuseRequest: true,
 			},
 			{
 				Method:       "GET",

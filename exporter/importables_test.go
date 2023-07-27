@@ -817,7 +817,7 @@ func TestDirectoryGeneration(t *testing.T) {
 				Path:       "/first",
 			},
 		},
-	}, "notebooks", func(ic *importContext) {
+	}, "directories", func(ic *importContext) {
 		err := resourcesMap["databricks_directory"].List(ic)
 		assert.NoError(t, err)
 
@@ -825,7 +825,7 @@ func TestDirectoryGeneration(t *testing.T) {
 		assert.Equal(t, commands.TrimLeadingWhitespace(`
 		resource "databricks_directory" "first_1234" {
 		  path = "/first"
-		}`), string(ic.Files["notebooks"].Bytes()))
+		}`), string(ic.Files["directories"].Bytes()))
 	})
 }
 
