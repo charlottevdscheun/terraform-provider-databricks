@@ -362,6 +362,7 @@ func TestUpdateAzStorageCredentialMI(t *testing.T) {
 				ExpectedRequest: map[string]any{
 					"azure_managed_identity": map[string]any{
 						"access_connector_id": "CHANGED",
+						"managed_identity_id": "",
 					},
 				},
 			},
